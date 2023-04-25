@@ -95,5 +95,9 @@
   </class>
   <class name="guided_target" type="mavros::extra_plugins::GuidedTargetPlugin" base_class_type="mavros::plugin::PluginBase">
      <description>Send guided target.</description>
+  </class>
+  
+  <class name="keyboard_command" type="mavros::extra_plugins::KeyboardCommandPlugin" base_class_type="mavros::plugin::PluginBase">
+     <description>Accepts keyboard command.</description>
 </class>
 </library>
