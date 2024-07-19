@@ -132,6 +132,9 @@ private:
 		//! Build 6x6 velocity covariance matrix to be transformed and sent
 		Matrix6d cov_vel = Matrix6d::Zero();
 		ftf::mavlink_urt_to_covariance_matrix(odom_msg.velocity_covariance, cov_vel);
+		// ROS_INFO_STREAM_NAMED("odom", "ODOM: output: pose covariance matrix:" << std::endl << cov_pose);
+		// ROS_INFO_STREAM_NAMED("odom", "ODOM: output: velocity covariance matrix:" << std::endl << cov_vel);
+
 
 		Eigen::Vector3d position {};		//!< Position vector. WRT frame_id
 		Eigen::Quaterniond orientation {};	//!< Attitude quaternion. WRT frame_id

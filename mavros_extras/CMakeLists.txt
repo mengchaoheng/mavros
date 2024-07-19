@@ -65,6 +65,7 @@ include_directories(
 )
 
 add_library(mavros_extras
+  src/plugins/servo_output_raw.cpp
   src/plugins/keyboard_command.cpp 
   src/plugins/adsb.cpp
   src/plugins/cam_imu_sync.cpp

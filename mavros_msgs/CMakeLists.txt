@@ -46,6 +46,7 @@ add_message_files(
   ManualControl.msg
   Mavlink.msg
   MountControl.msg
+  MotorRPM.msg
   NavControllerOutput.msg
   OpticalFlowRad.msg
   OverrideRCIn.msg
@@ -58,6 +59,7 @@ add_message_files(
   RTCM.msg
   RadioStatus.msg
   RTKBaseline.msg
+  ServoOutputRaw.msg
   State.msg
   StatusText.msg
   TerrainReport.msg
