@@ -107,6 +107,7 @@ private:
 		target->yaw_rate = yaw_rate;
 
 		target_local_pub.publish(target);
+		// ROS_INFO_STREAM_NAMED("setpoint_raw", "message handlers: Rx from FCU" << std::endl << target->position);
 	}
 
 	void handle_position_target_global_int(const mavlink::mavlink_message_t *msg, mavlink::common::msg::POSITION_TARGET_GLOBAL_INT &tgt)
@@ -163,6 +164,7 @@ private:
 
 	void local_cb(const mavros_msgs::PositionTarget::ConstPtr &req)
 	{
+		
 		Eigen::Vector3d position, velocity, af;
 		float yaw, yaw_rate;
 
@@ -200,6 +202,7 @@ private:
 					velocity,
 					af,
 					yaw, yaw_rate);
+		// ROS_INFO_STREAM_NAMED("setpoint_raw", "subscribe callbacks: Send position setpoints To FCU" << std::endl << req->position);
 	}
 
 	void global_cb(const mavros_msgs::GlobalPositionTarget::ConstPtr &req)

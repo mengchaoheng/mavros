@@ -181,6 +181,7 @@ private:
 		tf::poseMsgToEigen(req->pose, tr);
 
 		send_position_target(req->header.stamp, tr);
+		// ROS_INFO_STREAM_NAMED("setpoint_position", "send_position_target:" << std::endl << req->pose);
 	}
 
 	/**

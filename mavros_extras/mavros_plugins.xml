@@ -97,9 +97,9 @@
      <description>Send guided target.</description>
   </class>
   
-  <class name="keyboard_command" type="mavros::extra_plugins::KeyboardCommandPlugin" base_class_type="mavros::plugin::PluginBase">
+  <!-- <class name="keyboard_command" type="mavros::extra_plugins::KeyboardCommandPlugin" base_class_type="mavros::plugin::PluginBase">
      <description>Accepts keyboard command.</description>
-  </class>
+  </class> -->
   <class name="servo_output_raw" type="mavros::extra_plugins::ServoOutputRawPlugin" base_class_type="mavros::plugin::PluginBase">
      <description>Accepts pwm.</description>
   </class>
