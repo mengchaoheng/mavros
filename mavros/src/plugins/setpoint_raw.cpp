@@ -202,7 +202,7 @@ private:
 					velocity,
 					af,
 					yaw, yaw_rate);
-		// ROS_INFO_STREAM_NAMED("setpoint_raw", "subscribe callbacks: Send position setpoints To FCU" << std::endl << req->position);
+		// ROS_INFO_STREAM_NAMED("setpoint_raw", "subscribe callbacks: Send setpoint_raw To FCU" << std::endl << req->position);
 	}
 
 	void global_cb(const mavros_msgs::GlobalPositionTarget::ConstPtr &req)
