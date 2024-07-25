@@ -18,6 +18,9 @@
 		<param name="target_system_id" value="$(arg tgt_system)" />
 		<param name="target_component_id" value="$(arg tgt_component)" />
 		<param name="fcu_protocol" value="$(arg fcu_protocol)" />
+		<remap from="mavros/odometry/pose_cov" to="/quadrotor/pose"/>
+		<remap from="/mavros/imu/data_raw"  to="/quadrotor/imu"/>
+		<remap from="/mavros/motorpwm"  to="/quadrotor/rpm"/>
 
 		<!-- load blacklist, config -->
 		<rosparam command="load" file="$(arg pluginlists_yaml)" />

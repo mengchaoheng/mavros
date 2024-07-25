@@ -386,6 +386,7 @@ private:
 			auto accel_flu = ftf::transform_frame_aircraft_baselink(accel_frd);
 
 			publish_imu_data_raw(header, gyro_flu, accel_flu, accel_frd);
+			// ROS_INFO_STREAM_NAMED("imu", "accel_frd: " << std::endl << accel_frd);
 		}
 		// [accel_available]
 

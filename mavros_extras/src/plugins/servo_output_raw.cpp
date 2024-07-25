@@ -85,10 +85,31 @@ private:
 
         auto pwm = boost::make_shared<mavros_msgs::MotorRPM>();
         pwm->header = m_uas->synchronized_header(frame_id, servo_output_raw.time_usec);
-        pwm->rpm[0]=((servo_output_raw.servo1_raw-1000)/1000)*1000 * 60/M_PI;
-        pwm->rpm[1]=((servo_output_raw.servo2_raw-1000)/1000)*1000 * 60/M_PI;
-        pwm->rpm[2]=((servo_output_raw.servo3_raw-1000)/1000)*1000 * 60/M_PI;
-        pwm->rpm[3]=((servo_output_raw.servo4_raw-1000)/1000)*1000 * 60/M_PI;
+		// change the order for I estimator:
+		//((float) (servo_output_raw.servo1_raw-1000)/1000.f) is the value send to gazebo by px4, *1000.f is input_scaling and +100.0f is the zero_position_armed of iris sdf.
+		if(servo_output_raw.servo1_raw >= 1000 ){
+			pwm->rpm[3]=(((float) (servo_output_raw.servo1_raw-1000)/1000.f)*1000.f +100.0f); 
+		}else{
+			pwm->rpm[3]=0.f;
+		}
+
+		if(servo_output_raw.servo2_raw >= 1000 ){
+			pwm->rpm[1]=(((float) (servo_output_raw.servo2_raw-1000)/1000.f)*1000.f +100.0f);
+		}else{
+			pwm->rpm[1]=0.f;
+		}
+
+		if(servo_output_raw.servo3_raw >= 1000 ){
+			pwm->rpm[0]=(((float) (servo_output_raw.servo3_raw-1000)/1000.f)*1000.f +100.0f);
+		}else{
+			pwm->rpm[0]=0.f;
+		}
+
+		if(servo_output_raw.servo4_raw >= 1000 ){
+			pwm->rpm[2]=(((float) (servo_output_raw.servo4_raw-1000)/1000.f)*1000.f +100.0f);
+		}else{
+			pwm->rpm[2]=0.f;
+		}
 
         motorpwm_pub.publish(pwm);
 

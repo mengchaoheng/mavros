@@ -142,12 +142,6 @@ private:
 		pose->pose = odom->pose.pose;
 		local_position.publish(pose);
 
-		// for I estimator
-		// publish pose_cov always
-		auto pose_cov = boost::make_shared<geometry_msgs::PoseWithCovarianceStamped>();
-		pose_cov->header = odom->header;
-		pose_cov->pose = odom->pose;
-		local_position_cov.publish(pose_cov);
 
 		// publish velocity always
 		// velocity in the body frame

@@ -19,6 +19,7 @@
 #include <mavros/mavros_plugin.h>
 #include <tf2_eigen/tf2_eigen.h>
 #include <boost/algorithm/string.hpp>
+#include <geometry_msgs/PoseWithCovarianceStamped.h>
 
 #include <nav_msgs/Odometry.h>
 #include <geometry_msgs/TransformStamped.h>
@@ -61,6 +62,8 @@ public:
 
 		// publishers
 		odom_pub = odom_nh.advertise<nav_msgs::Odometry>("in", 10);
+		local_position_cov = odom_nh.advertise<geometry_msgs::PoseWithCovarianceStamped>("pose_cov", 10);
+
 
 		// subscribers
 		odom_sub = odom_nh.subscribe("out", 1, &OdometryPlugin::odom_cb, this);
@@ -77,6 +80,7 @@ private:
 	ros::NodeHandle odom_nh;			//!< node handler
 	ros::Publisher odom_pub;			//!< nav_msgs/Odometry publisher
 	ros::Subscriber odom_sub;			//!< nav_msgs/Odometry subscriber
+	ros::Publisher local_position_cov;
 
 	std::string fcu_odom_parent_id_des;			//!< desired orientation of the fcu odometry message's parent frame
 	std::string fcu_odom_child_id_des;			//!< desired orientation of the fcu odometry message's child frame
@@ -183,6 +187,14 @@ private:
 		r_vel.block<3, 3>(0, 0) = r_vel.block<3, 3>(3, 3) = tf_child2child_des.linear();
 		cov_vel = r_vel * cov_vel * r_vel.transpose();
 		Eigen::Map<Matrix6d>(odom->twist.covariance.data(), cov_vel.rows(), cov_vel.cols()) = cov_vel;
+
+		// for I estimator
+		// publish pose_cov always
+		auto pose_cov = boost::make_shared<geometry_msgs::PoseWithCovarianceStamped>();
+		pose_cov->header = odom->header;
+		pose_cov->pose = odom->pose;
+		//
+		local_position_cov.publish(pose_cov);
 
 		//! Publish the data
 		odom_pub.publish(odom);
