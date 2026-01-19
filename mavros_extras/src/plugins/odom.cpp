@@ -19,7 +19,7 @@
 #include <mavros/mavros_plugin.h>
 #include <tf2_eigen/tf2_eigen.h>
 #include <boost/algorithm/string.hpp>
-#include <geometry_msgs/PoseWithCovarianceStamped.h>
+// #include <geometry_msgs/PoseWithCovarianceStamped.h>
 
 #include <nav_msgs/Odometry.h>
 #include <geometry_msgs/TransformStamped.h>
@@ -62,7 +62,7 @@ public:
 
 		// publishers
 		odom_pub = odom_nh.advertise<nav_msgs::Odometry>("in", 10);
-		local_position_cov = odom_nh.advertise<geometry_msgs::PoseWithCovarianceStamped>("pose_cov", 10);
+		// local_position_cov = odom_nh.advertise<geometry_msgs::PoseWithCovarianceStamped>("pose_cov", 10);
 
 
 		// subscribers
@@ -80,7 +80,7 @@ private:
 	ros::NodeHandle odom_nh;			//!< node handler
 	ros::Publisher odom_pub;			//!< nav_msgs/Odometry publisher
 	ros::Subscriber odom_sub;			//!< nav_msgs/Odometry subscriber
-	ros::Publisher local_position_cov;
+	// ros::Publisher local_position_cov;
 
 	std::string fcu_odom_parent_id_des;			//!< desired orientation of the fcu odometry message's parent frame
 	std::string fcu_odom_child_id_des;			//!< desired orientation of the fcu odometry message's child frame
@@ -139,6 +139,13 @@ private:
 		// ROS_INFO_STREAM_NAMED("odom", "ODOM: output: pose covariance matrix:" << std::endl << cov_pose);
 		// ROS_INFO_STREAM_NAMED("odom", "ODOM: output: velocity covariance matrix:" << std::endl << cov_vel);
 
+		// ROS_INFO_STREAM_NAMED("odom", "ODOMETRY from FCU: "
+		// << "pos(" << odom_msg.x << ", " << odom_msg.y << ", " << odom_msg.z << ") "
+		// << "orient(" << odom_msg.q[0] << ", " << odom_msg.q[1] << ", " << odom_msg.q[2] << ", " << odom_msg.q[3] << ") "
+		// << "vel(" << odom_msg.vx << ", " << odom_msg.vy << ", " << odom_msg.vz << ") "
+		// << "ang(" << odom_msg.rollspeed << ", " << odom_msg.pitchspeed << ", " << odom_msg.yawspeed << ")"
+		// );
+
 
 		Eigen::Vector3d position {};		//!< Position vector. WRT frame_id
 		Eigen::Quaterniond orientation {};	//!< Attitude quaternion. WRT frame_id
@@ -190,11 +197,11 @@ private:
 
 		// for I estimator
 		// publish pose_cov always
-		auto pose_cov = boost::make_shared<geometry_msgs::PoseWithCovarianceStamped>();
-		pose_cov->header = odom->header;
-		pose_cov->pose = odom->pose;
-		//
-		local_position_cov.publish(pose_cov);
+		// auto pose_cov = boost::make_shared<geometry_msgs::PoseWithCovarianceStamped>();
+		// pose_cov->header = odom->header;
+		// pose_cov->pose = odom->pose;
+		// //
+		// local_position_cov.publish(pose_cov);
 
 		//! Publish the data
 		odom_pub.publish(odom);

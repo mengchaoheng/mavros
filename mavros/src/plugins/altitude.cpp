@@ -38,7 +38,6 @@ public:
 
 		nh.param<std::string>("frame_id", frame_id, "map");
 		altitude_pub = nh.advertise<mavros_msgs::Altitude>("altitude", 10);
-		
 	}
 
 	Subscriptions get_subscriptions() override
